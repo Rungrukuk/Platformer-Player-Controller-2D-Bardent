@@ -14,10 +14,10 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6665827201112169863}
-    m_Position: {x: 260, y: 100, z: 0}
+    m_Position: {x: 260, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8451722706580737368}
-    m_Position: {x: 260, y: 160, z: 0}
+    m_Position: {x: 260, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2159581298201675727}
     m_Position: {x: 260, y: -20, z: 0}
@@ -47,7 +47,7 @@ AnimatorTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: attackCounter
-    m_EventTreshold: 1
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6665827201112169863}
   m_Solo: 0
@@ -61,7 +61,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Weapon_Sword1_2
+  m_Name: Weapon_Sword1_3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -171,7 +171,7 @@ AnimatorTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: attackCounter
-    m_EventTreshold: 2
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8451722706580737368}
   m_Solo: 0
@@ -219,13 +219,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -316,7 +316,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Weapon_Sword1_3
+  m_Name: Weapon_Sword1_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
