@@ -33,7 +33,6 @@ public class P_AttackState : P_AbilityState
         base.DoChecks();
         if(shouldCheckFlip)
         {
-            
             core.Movement.CheckIfShouldFlip(xInput);
         }
 

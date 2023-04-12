@@ -25,7 +25,7 @@ public class LookForPlayerState : State
     public override void Enter()
     {
         base.Enter();
-        entity.SetVelocity(0);
+       core.Movement.SetVelocityX(0);
         amountOfTurnsDone = 0;
         isAllTurnsDone = false;
         isAllTurnsTimeDone = false;
@@ -42,14 +42,14 @@ public class LookForPlayerState : State
         base.LogicUpdate();
         if (turnImmediately)
         {
-            entity.Flip();
+            core.Movement.Flip();
             lastTurnTime = Time.time;
             amountOfTurnsDone++;
             turnImmediately = false;
         }
         else if(Time.time >= lastTurnTime + stateData.timeBetweenTurns && !isAllTurnsDone)
         {
-            entity.Flip();
+            core.Movement.Flip();
             lastTurnTime = Time.time;
             amountOfTurnsDone++;
         }

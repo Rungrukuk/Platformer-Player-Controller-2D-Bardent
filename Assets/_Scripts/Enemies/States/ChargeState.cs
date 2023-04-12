@@ -16,15 +16,15 @@ public class ChargeState : State
     public override void DoChecks()
     {
         base.DoChecks();
-        isDetectingLedge = entity.CheckLedge();
-        isDetectingWall = entity.CheckWall();
+        isDetectingLedge = core.CollisionSenses.LedgeVertical;
+        isDetectingWall = core.CollisionSenses.WallFront;
 
     }
 
     public override void Enter()
     {
         base.Enter();
-        entity.SetVelocity(stateData.chargeSpeed);
+       core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
 
     }
 

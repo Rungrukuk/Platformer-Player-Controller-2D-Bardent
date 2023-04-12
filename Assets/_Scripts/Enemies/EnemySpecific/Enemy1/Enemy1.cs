@@ -36,9 +36,9 @@ public class Enemy1 : Entity
     private Transform meleeAttackPosition;
 
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         moveState = new E1_MoveState(this, stateMachine, "move",moveStateData,this);
         idleState = new E1_IdleState(this, stateMachine, "idle", idleStateData, this);
@@ -49,9 +49,11 @@ public class Enemy1 : Entity
         deadState = new E1_DeadState(this, stateMachine,"dead",deadStateData, this);
         chargeState = new E1_ChargeState(this, stateMachine, "charge", chargeStateData, this);
 
+    }
+    private void Start()
+    {
         stateMachine.Initialize(moveState);
     }
-
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

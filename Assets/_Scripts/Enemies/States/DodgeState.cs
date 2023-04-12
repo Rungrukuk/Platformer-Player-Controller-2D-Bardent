@@ -21,7 +21,7 @@ public class DodgeState : State
     public override void Enter()
     {
         base.Enter();
-        entity.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -entity.facingDirection);
+        core.Movement.SetVelocity(stateData.dodgeSpeed, stateData.dodgeAngle, -core.Movement.FacingDirection);
         canDodge = false;
         isDodgeOver = false;
     }

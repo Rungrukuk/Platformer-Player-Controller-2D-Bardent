@@ -43,9 +43,9 @@ public class Enemy2 : Entity
 
 
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         
         moveState = new E2_MoveState(this, stateMachine, "move", moveStateData, this);
         idleState = new E2_IdleState(this, stateMachine, "idle", idleStateData, this);
@@ -57,13 +57,15 @@ public class Enemy2 : Entity
         deadState = new E2_DeadState(this, stateMachine, "dead", deadStateData, this);
         dodgeState = new E2_DodgeState(this, stateMachine,"dodge",dodgeStateData, this);
         dodgeState.canDodge = true;
+    }
+    private void Start()
+    {
         stateMachine.Initialize(moveState);
     }
-
     public override void Update()
     {
         base.Update();
-        anim.SetFloat("yVelocity", rb.velocity.y);
+
     }
 
     public override void Damage(AttackDetails attackDetails)

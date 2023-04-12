@@ -32,7 +32,7 @@ public class P_TouchingWallState : PlayerState
         base.DoChecks();
         isGrounded = core.CollisionSenses.Ground;
         isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLedge = core.CollisionSenses.Ledge;
+        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
         jumpInput = player.InputHandler.JumpInput;
 
         if(isTouchingWall && !isTouchingLedge)

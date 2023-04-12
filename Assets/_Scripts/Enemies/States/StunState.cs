@@ -25,7 +25,7 @@ public class StunState : State
         base.Enter();
         isStunTimeOver = false;
         isMovementStopped = false;
-        entity.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
+        core.Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
     }
 
     public override void Exit()
@@ -44,7 +44,7 @@ public class StunState : State
         if(isGrounded&&Time.time>=startTime+stateData.stunKnockbackTime && !isMovementStopped)
         {
             isMovementStopped = true;
-            entity.SetVelocity(0);
+           core.Movement.SetVelocityX(0);
         }
     }
 

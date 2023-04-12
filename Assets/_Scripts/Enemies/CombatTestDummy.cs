@@ -11,7 +11,7 @@ public class CombatTestDummy : MonoBehaviour,IDamageable
     
     public void Damage(float amount)
     {
-        Debug.Log("Damage it took is: " + amount);
+        Debug.Log("It took : " + amount + " damage");
         Instantiate(hitParticles, transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
         anim.SetTrigger("damage");
     }

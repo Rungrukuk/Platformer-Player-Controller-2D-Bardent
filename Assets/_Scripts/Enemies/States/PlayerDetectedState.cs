@@ -16,14 +16,14 @@ public class PlayerDetectedState : State
     public override void DoChecks()
     {
         base.DoChecks();
-        isDetectingLedge = entity.CheckLedge();
+        isDetectingLedge = core.CollisionSenses.LedgeVertical;
     }
 
     public override void Enter()
     {
         base.Enter();
         performLongRangeAction = false;
-        entity.SetVelocity(0);
+        core.Movement.SetVelocityX(0);
 
     }
 
