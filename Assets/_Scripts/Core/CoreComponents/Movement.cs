@@ -6,17 +6,18 @@ public class Movement : CoreComponent
 {
     public Rigidbody2D RB { get; set; }
 
-    public int FacingDirection { get; set; }    
+    public int FacingDirection { get; set; }
 
     private Vector2 workSpace;
     public Vector2 CurrentVelocity { get; private set; }
 
-
+    public bool CanSetVelocity { get; set; }
     protected override void Awake()
     {
         base.Awake();
         RB = GetComponentInParent<Rigidbody2D>();
         FacingDirection = 1;
+        CanSetVelocity = true;
     }
 
     public void LogicUpdate()
@@ -27,35 +28,41 @@ public class Movement : CoreComponent
     #region SetFunctions
     public void SetVelocityZero()
     {
-        RB.velocity = Vector2.zero;
-        CurrentVelocity = Vector2.zero;
+        workSpace = Vector2.zero;
+        SetFinalVelocity();
     }
 
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
         workSpace.Set(angle.x * velocity * direction, angle.y * velocity);
-        RB.velocity = workSpace;
-        CurrentVelocity = workSpace;
+        SetFinalVelocity();
     }
     public void SetVelocity(float velocity, Vector2 direction)
     {
         workSpace = direction * velocity;
-        RB.velocity = workSpace;
-        CurrentVelocity = workSpace;
+        SetFinalVelocity();
     }
     public void SetVelocityX(float velocity)
     {
         workSpace.Set(velocity, CurrentVelocity.y);
-        RB.velocity = workSpace;
-        CurrentVelocity = workSpace;
+        SetFinalVelocity();
     }
 
     public void SetVelocityY(float velocity)
     {
         workSpace.Set(CurrentVelocity.x, velocity);
-        RB.velocity = workSpace;
-        CurrentVelocity = workSpace;
+        SetFinalVelocity();
+    }
+
+    private void SetFinalVelocity()
+    {
+        if (CanSetVelocity)
+        {
+            RB.velocity = workSpace;
+            CurrentVelocity = workSpace;
+        }
+
     }
 
     public void CheckIfShouldFlip(int xInput)

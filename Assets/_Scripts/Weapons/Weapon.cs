@@ -12,6 +12,8 @@ public class Weapon : MonoBehaviour
     protected P_AttackState state;
 
     protected int attackCounter;
+
+    protected Core core;
     protected virtual void Awake()
     {
         baseAnimator = transform.Find("Base").GetComponent<Animator>();
@@ -44,8 +46,8 @@ public class Weapon : MonoBehaviour
     #region Animation Triggers
 
     public virtual void StartMovementTrigger()
-    {
-        state.SetPlayerVelocity(weaponData.MovementSpeed[attackCounter]);
+    {  
+        state.SetPlayerVelocity(weaponData.MovementSpeed[attackCounter] * Mathf.Abs(state.xInput));
     }
 
     public virtual void StopMovementTrigger()
@@ -70,8 +72,9 @@ public class Weapon : MonoBehaviour
     }
     #endregion
 
-    public void InitializeWeapon(P_AttackState state)
+    public void InitializeWeapon(P_AttackState state,Core core)
     {
         this.state = state;
+        this.core = core;
     }
 }

@@ -6,8 +6,6 @@ public class P_AttackState : P_AbilityState
 {
     private Weapon weapon;
 
-    private int xInput;
-
     private float velocityToSet;
 
     private bool setVelocity;
@@ -49,7 +47,7 @@ public class P_AttackState : P_AbilityState
     public void SetWeapon(Weapon weapon)
     {
         this.weapon = weapon;
-        weapon.InitializeWeapon(this);
+        weapon.InitializeWeapon(this,core);
     }
 
     public void SetPlayerVelocity(float velocity)

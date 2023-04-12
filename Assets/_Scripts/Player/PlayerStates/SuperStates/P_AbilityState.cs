@@ -7,6 +7,7 @@ public class P_AbilityState : PlayerState
     protected bool isAbilityDone;
 
     protected bool isGrounded;
+    public int xInput;
     public P_AbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -15,6 +16,7 @@ public class P_AbilityState : PlayerState
     {
         base.DoChecks();
         isGrounded = core.CollisionSenses.Ground;
+        xInput = player.InputHandler.NormalizedInputX;
     }
 
     public override void Enter()
@@ -34,7 +36,8 @@ public class P_AbilityState : PlayerState
 
         if (isAbilityDone)
         {
-            if (isGrounded && core.Movement.CurrentVelocity.y <0.01f)
+            Debug.Log(core.Movement.CurrentVelocity.y);
+            if (isGrounded)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

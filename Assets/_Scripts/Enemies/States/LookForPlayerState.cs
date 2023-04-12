@@ -25,7 +25,7 @@ public class LookForPlayerState : State
     public override void Enter()
     {
         base.Enter();
-       core.Movement.SetVelocityX(0);
+        core.Movement.SetVelocityX(0);
         amountOfTurnsDone = 0;
         isAllTurnsDone = false;
         isAllTurnsTimeDone = false;
@@ -40,6 +40,7 @@ public class LookForPlayerState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        core.Movement.SetVelocityX(0);
         if (turnImmediately)
         {
             core.Movement.Flip();

@@ -24,7 +24,7 @@ public class ChargeState : State
     public override void Enter()
     {
         base.Enter();
-       core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+        core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
 
     }
 
@@ -36,6 +36,7 @@ public class ChargeState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
     }
 
     public override void PhysicsUpdate()

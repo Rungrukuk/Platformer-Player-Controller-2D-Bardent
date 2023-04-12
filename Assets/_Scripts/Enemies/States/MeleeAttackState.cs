@@ -6,7 +6,6 @@ public class MeleeAttackState : AttackState
 {
     protected D_MeleeAttackState stateData;
 
-    protected AttackDetails attackDetails;
 
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
@@ -21,8 +20,6 @@ public class MeleeAttackState : AttackState
     public override void Enter()
     {
         base.Enter();
-        attackDetails.damageAmount = stateData.attackDamage;
-        attackDetails.position = entity.transform.position;
     }
 
     public override void Exit()
@@ -48,9 +45,19 @@ public class MeleeAttackState : AttackState
     public override void TriggerAttack()
     {
         base.TriggerAttack();
-        Collider2D collider = Physics2D.OverlapCircle(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
-        IDamageable damageable = collider.GetComponentInChildren<IDamageable>();
-        damageable?.Damage(attackDetails.damageAmount);
+        Collider2D[] detetctedObjects = Physics2D.OverlapCircleAll(attackPosition.position, stateData.attackRadius, stateData.whatIsPlayer);
+        foreach (Collider2D collider in detetctedObjects)
+        {
+            if(collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.Damage(stateData.attackDamage);
+            }
+            if (collider.TryGetComponent<IKnockbackable>(out var knockbackable))
+            {
+                knockbackable.Knockback(stateData.knockbackAngle,stateData.knockbackStrength,core.Movement.FacingDirection);
+            }
+        }
+
 
     }
 }

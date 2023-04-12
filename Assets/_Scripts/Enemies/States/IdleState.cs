@@ -24,7 +24,7 @@ public class IdleState : State
     public override void Enter()
     {
         base.Enter();
-       core.Movement.SetVelocityX(0);
+        core.Movement.SetVelocityX(0);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -42,7 +42,8 @@ public class IdleState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(Time.time>=startTime + idleTime)
+        core.Movement.SetVelocityX(0);
+        if (Time.time>=startTime + idleTime)
         {
             isIdleTimeOver=true;
         }
