@@ -33,7 +33,8 @@ public class P_AttackState : P_AbilityState
         base.DoChecks();
         if(shouldCheckFlip)
         {
-            player.CheckIfShouldFlip(xInput);
+            
+            core.Movement.CheckIfShouldFlip(xInput);
         }
 
     }
@@ -43,7 +44,7 @@ public class P_AttackState : P_AbilityState
         xInput = player.InputHandler.NormalizedInputX;
         if(setVelocity)
         {
-            player.SetVelocityX(velocityToSet*player.FacingDirection);
+            core.Movement.SetVelocityX(velocityToSet*core.Movement.FacingDirection);
         }
     }
     public void SetWeapon(Weapon weapon)
@@ -54,7 +55,7 @@ public class P_AttackState : P_AbilityState
 
     public void SetPlayerVelocity(float velocity)
     {
-        player.SetVelocityX(velocity * player.FacingDirection);
+        core.Movement.SetVelocityX(velocity * core.Movement.FacingDirection);
         velocityToSet = velocity;
         setVelocity = true;
     }

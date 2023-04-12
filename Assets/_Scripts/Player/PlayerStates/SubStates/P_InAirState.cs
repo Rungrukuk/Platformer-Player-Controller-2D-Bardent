@@ -34,10 +34,10 @@ public class P_InAirState : PlayerState
         oldIsTouchingWall = isTouchingWall;
         oldIsTouchingWallBack = isTouchingWallBack;
 
-        isGrounded = player.CheckIfGrounded();
-        isTouchingWall = player.CheckIfTouchingWall();
-        isTouchingWallBack = player.CheckIfTouchingWallBack();
-        isTouchingLedge = player.CheckIfTouchingLedge();
+        isGrounded = core.CollisionSenses.Ground;
+        isTouchingWall = core.CollisionSenses.WallFront;
+        isTouchingWallBack = core.CollisionSenses.WallBack;
+        isTouchingLedge = core.CollisionSenses.Ledge;
 
         if (isTouchingWall && !isTouchingLedge)
         {
@@ -86,7 +86,7 @@ public class P_InAirState : PlayerState
         {
             stateMachine.ChangeState(player.secondaryAttackState);
         }
-        else if (isGrounded && player.CurrentVelocity.y < 0.01f)
+        else if (isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
@@ -97,7 +97,7 @@ public class P_InAirState : PlayerState
         else if (jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCayoteTime))
         {
             StopWallJumpCayoteTime();
-            isTouchingWall = player.CheckIfTouchingWall();
+            isTouchingWall = core.CollisionSenses.WallFront;
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
@@ -109,7 +109,7 @@ public class P_InAirState : PlayerState
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if(isTouchingWall&&xInput == player.FacingDirection && player.CurrentVelocity.y<=0)
+        else if(isTouchingWall&&xInput == core.Movement.FacingDirection && core.Movement.CurrentVelocity.y<=0)
         {
             stateMachine.ChangeState(player.WallSlideState);
         }
@@ -119,8 +119,8 @@ public class P_InAirState : PlayerState
         }
         else
         {
-            player.CheckIfShouldFlip(xInput);
-            player.SetVelocityX(playerData.movementVelocity * xInput);
+            core.Movement.CheckIfShouldFlip(xInput);
+            core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
             player.Anim.SetFloat("yVelocity", player.RB.velocity.y);
             player.Anim.SetFloat("xVelocity", Mathf.Abs(player.RB.velocity.x));
@@ -139,10 +139,10 @@ public class P_InAirState : PlayerState
         {
             if (jumpInputStopped)
             {
-                player.SetVelocityY(player.CurrentVelocity.y * playerData.jumpHeightMultiplier);
+                core.Movement.SetVelocityY(core.Movement.CurrentVelocity.y * playerData.jumpHeightMultiplier);
                 isJumping = false;
             }
-            else if (player.CurrentVelocity.y <= 0f)
+            else if (core.Movement.CurrentVelocity.y <= 0f)
             {
                 isJumping = false;
             }

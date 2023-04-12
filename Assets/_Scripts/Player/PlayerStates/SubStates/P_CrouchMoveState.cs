@@ -24,11 +24,11 @@ public class P_CrouchMoveState : P_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        isTouchingCeiling = player.CheckIfTouchingCeiling();
+        isTouchingCeiling = core.CollisionSenses.Ceiling;
         if (!isExitingState)
         {
-            player.SetVelocityX(playerData.crouchMovementVelocity * player.FacingDirection);
-            player.CheckIfShouldFlip(xInput);
+            core.Movement.SetVelocityX(playerData.crouchMovementVelocity * core.Movement.FacingDirection);
+            core.Movement.CheckIfShouldFlip(xInput);
             if (xInput == 0)
             {
                 stateMachine.ChangeState(player.CrouchIdleState);

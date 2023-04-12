@@ -74,12 +74,12 @@ public class PlayerInputHandler : MonoBehaviour
     {
         RawMovementInput = context.ReadValue<Vector2>();
         if (Mathf.Abs(RawMovementInput.x) > 0.68f)
-            NormalizedInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
+            NormalizedInputX = (int)(RawMovementInput.x * Vector2.right).normalized.x;
         else
             NormalizedInputX = 0;
 
         if(Mathf.Abs(RawMovementInput.y)>0.68f)
-            NormalizedInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+            NormalizedInputY = (int)(RawMovementInput.y * Vector2.up).normalized.y;
         else
             NormalizedInputY = 0;
     }

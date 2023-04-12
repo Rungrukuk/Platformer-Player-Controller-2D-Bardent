@@ -12,7 +12,7 @@ public class P_CrouchIdleState : P_GroundedState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocityZero();
+        core.Movement.SetVelocityZero();
         player.SetColliderHeight(playerData.crouchColliderHeight);
     }
 
@@ -25,7 +25,7 @@ public class P_CrouchIdleState : P_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        isTouchingCeiling = player.CheckIfTouchingCeiling();
+        isTouchingCeiling = core.CollisionSenses.Ceiling;
         if (!isExitingState)
         {
             if (xInput != 0)
