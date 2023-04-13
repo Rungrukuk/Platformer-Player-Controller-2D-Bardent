@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgeSpeed: 20
   dodgeTime: 0.1
-  dodgeCooldown: 1
+  dodgeCooldown: 2
   dodgeAngle: {x: 2, y: 1}

@@ -36,7 +36,6 @@ public class P_AbilityState : PlayerState
 
         if (isAbilityDone)
         {
-            Debug.Log(core.Movement.CurrentVelocity.y);
             if (isGrounded)
             {
                 stateMachine.ChangeState(player.IdleState);
