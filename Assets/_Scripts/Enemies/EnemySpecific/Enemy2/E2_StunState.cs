@@ -1,54 +1,38 @@
-public class E2_StunState : StunState
+
+
+namespace _Scripts.Enemies.EnemySpecific.Enemy2
 {
-    Enemy2 enemy;
-    public E2_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public class E2_StunState : StunState
     {
-        this.enemy = enemy;
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (isStunTimeOver)
+        private readonly Enemy2 enemy;
+        public E2_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
         {
-            if (performCloseRangeAction)
+            this.enemy = enemy;
+        }
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (isStunTimeOver)
             {
-                stateMachine.ChangeState(enemy.meleeAttackState);
-            }
-            else if (isPlayerInMinAgroRange)
-            {
-                enemy.dodgeState.canDodge = true;
-                stateMachine.ChangeState(enemy.dodgeState);
-            }
-            else if(!isPlayerInMaxAgroRange)
-            {
-                enemy.lookForPlayerState.SetTurnImmediately(true);
-                stateMachine.ChangeState(enemy.lookForPlayerState);
-            }
-            else if (isPlayerInMaxAgroRange && !isPlayerInMinAgroRange)
-            {
-                stateMachine.ChangeState(enemy.rangedAttackState);
+                if (performCloseRangeAction)
+                {
+                    stateMachine.ChangeState(enemy.MeleeAttackState);
+                }
+                else if (isPlayerInMinAgroRange)
+                {
+                    enemy.DodgeState.canDodge = true;
+                    stateMachine.ChangeState(enemy.DodgeState);
+                }
+                else if(!isPlayerInMaxAgroRange)
+                {
+                    enemy.LookForPlayerState.SetTurnImmediately(true);
+                    stateMachine.ChangeState(enemy.LookForPlayerState);
+                }
+                else if (isPlayerInMaxAgroRange && !isPlayerInMinAgroRange)
+                {
+                    stateMachine.ChangeState(enemy.RangedAttackState);
+                }
             }
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

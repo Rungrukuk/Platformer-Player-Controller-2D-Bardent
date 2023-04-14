@@ -26,10 +26,12 @@ public class P_MoveState : P_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (Movement != null)
+        {
+            Movement.CheckIfShouldFlip(xInput);
+            Movement.SetVelocityX(playerData.movementVelocity * xInput);
+        }
 
-        core.Movement.CheckIfShouldFlip(xInput);
-
-        core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
 
 
         if(!isExitingState)

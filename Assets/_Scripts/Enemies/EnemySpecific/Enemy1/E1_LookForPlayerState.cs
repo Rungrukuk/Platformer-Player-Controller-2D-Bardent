@@ -1,46 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using _Scripts.Enemies.States;
 
-public class E1_LookForPlayerState : LookForPlayerState
+namespace _Scripts.Enemies.EnemySpecific.Enemy1
 {
-    private Enemy1 enemy;
-
-    public E1_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_LookForPlayerState stateData,Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public class E1_LookForPlayerState : LookForPlayerState
     {
-        this.enemy = enemy;
-    }
+        private readonly Enemy1 enemy;
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (isPlayerInMinAgroRange)
+        public E1_LookForPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName,
+            D_LookForPlayerState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
+            this.enemy = enemy;
         }
-        if (isAllTurnsTimeDone)
-        {
-            stateMachine.ChangeState(enemy.moveState);
-        }
-    }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (isPlayerInMinAgroRange) stateMachine.ChangeState(enemy.PlayerDetectedState);
+            if (isAllTurnsTimeDone) stateMachine.ChangeState(enemy.MoveState);
+        }
     }
 }
+

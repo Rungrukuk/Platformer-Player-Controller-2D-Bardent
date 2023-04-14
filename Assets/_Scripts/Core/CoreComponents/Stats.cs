@@ -1,30 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Stats : CoreComponent
+namespace _Scripts.Core.CoreComponents
 {
-    [SerializeField] private float maxHealth;
-    private float currentHealth;
-    protected override void Awake()
+    public class Stats : CoreComponent
     {
-        base.Awake();
-        currentHealth = maxHealth;
-    }
-
-    public void DecreaseHealth(float amount)
-    {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        [SerializeField] private float maxHealth;
+        private float currentHealth;
+        protected override void Awake()
         {
-            //TODO DIE()
-            currentHealth = 0;
-            Debug.Log(core.transform.parent.name + " Has Died");
+            base.Awake();
+            currentHealth = maxHealth;
         }
-    }
 
-    public void IncreaseHealth(float amount)
-    {
-        currentHealth = Mathf.Clamp(currentHealth + amount,0,maxHealth);
+        public void DecreaseHealth(float amount)
+        {
+            currentHealth -= amount;
+            if (currentHealth <= 0)
+            {
+                //TODO DIE()
+                currentHealth = 0;
+                Debug.Log(core.transform.parent.name + " Has Died");
+            }
+        }
+
+        public void IncreaseHealth(float amount)
+        {
+            currentHealth = Mathf.Clamp(currentHealth + amount,0,maxHealth);
+        }
     }
 }

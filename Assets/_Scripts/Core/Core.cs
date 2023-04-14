@@ -1,39 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using _Scripts.Core.CoreComponents;
 using UnityEngine;
 
-public class Core : MonoBehaviour
+namespace _Scripts.Core
 {
-    public Movement Movement { get => GenericNotImplementedError<Movement>.TryGet(movement, transform.parent.name); private set => movement = value; }
-    public CollisionSenses CollisionSenses { get => GenericNotImplementedError<CollisionSenses>.TryGet(collisionSenses, transform.parent.name); private set=>collisionSenses = value; }
-    public Combat Combat{ get => GenericNotImplementedError<Combat>.TryGet(combat, transform.parent.name); private set => combat = value;}
-    public Stats Stats { get => GenericNotImplementedError<Stats>.TryGet(stats, transform.parent.name); private set => stats = value; }
+    public class Core : MonoBehaviour
+    {
 
-    private Movement movement;
-    private CollisionSenses collisionSenses;
-    private Combat combat;
-    private Stats stats;
+        private readonly List<CoreComponent> coreComponents = new List<CoreComponent>();
+        public void LogicUpdate()
+        {
+            foreach (CoreComponent component in coreComponents)
+            {
+                component.LogicUpdate();
+            }
+        }
+        public void AddComponent(CoreComponent component)
+        {
+            if (!coreComponents.Contains(component))
+            {
+                coreComponents.Add(component);
+            }
+        }
 
-    private List<ILogicUpdate> components = new List<ILogicUpdate>();
-    private void Awake()
-    {
-        Movement = GetComponentInChildren<Movement>();
-        CollisionSenses = GetComponentInChildren<CollisionSenses>();
-        Combat = GetComponentInChildren<Combat>();
-        stats = GetComponentInChildren<Stats>();
-    }
-    public void LogicUpdate()
-    {
-        foreach (ILogicUpdate component in components)
+        public T GetCoreComponent<T>() where T : CoreComponent
         {
-            component.LogicUpdate();
+            var comp =  coreComponents.OfType<T>().FirstOrDefault();
+            if (comp == null)
+                Debug.LogWarning($"{typeof(T)} Not Found On {transform.parent.name}");
+            return comp;
         }
-    }
-    public void AddComponent(ILogicUpdate component)
-    {
-        if (!components.Contains(component))
+
+        public T GetCoreComponent<T>(ref T value) where T : CoreComponent
         {
-            components.Add(component);
+            value = GetCoreComponent<T>();
+            return value;
         }
+
     }
 }

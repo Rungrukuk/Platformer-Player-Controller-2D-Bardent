@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class P_CrouchIdleState : P_GroundedState
 {
-    private bool isTouchingCeiling;
     public P_CrouchIdleState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -12,7 +11,7 @@ public class P_CrouchIdleState : P_GroundedState
     public override void Enter()
     {
         base.Enter();
-        core.Movement.SetVelocityZero();
+        Movement.SetVelocityZero();
         player.SetColliderHeight(playerData.crouchColliderHeight);
     }
 
@@ -25,7 +24,6 @@ public class P_CrouchIdleState : P_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
         if (!isExitingState)
         {
             if (xInput != 0)

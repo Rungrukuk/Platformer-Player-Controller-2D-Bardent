@@ -1,54 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using _Scripts.Core.CoreComponents;
 
-public class P_AbilityState : PlayerState
+namespace _Scripts.Player.PlayerStates.SuperStates
 {
-    protected bool isAbilityDone;
-
-    protected bool isGrounded;
-    public int xInput;
-    public P_AbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public class P_AbilityState : PlayerState
     {
-    }
+        protected bool isAbilityDone;
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        isGrounded = core.CollisionSenses.Ground;
-        xInput = player.InputHandler.NormalizedInputX;
-    }
+        private bool isGrounded;
+        protected Movement Movement => movement ? movement : core.GetCoreComponent(ref movement);
 
-    public override void Enter()
-    {
-        base.Enter();
-        isAbilityDone = false;
-    }
+        private Movement movement;
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+        private CollisionSenses collisionSenses;
+        private CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent(ref collisionSenses);
+        public int xInput;
 
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-
-        if (isAbilityDone)
+        protected P_AbilityState(global::Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
-            if (isGrounded)
+        }
+
+        public override void DoChecks()
+        {
+            base.DoChecks();
+            if(CollisionSenses)
+                isGrounded = CollisionSenses.Ground;
+            xInput = player.InputHandler.NormalizedInputX;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            isAbilityDone = false;
+        }
+    
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+            if (isAbilityDone)
             {
-                stateMachine.ChangeState(player.IdleState);
-            }
-            else
-            {
-                stateMachine.ChangeState(player.InAirState);
+                if (isGrounded)
+                {
+                    stateMachine.ChangeState(player.IdleState);
+                }
+                else
+                {
+                    stateMachine.ChangeState(player.InAirState);
+                }
             }
         }
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+    
     }
 }

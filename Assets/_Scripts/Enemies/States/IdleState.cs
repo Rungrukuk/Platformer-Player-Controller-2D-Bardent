@@ -1,30 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class IdleState : State
 {
-    protected D_IdleState stateData;
+    private readonly D_IdleState stateData;
 
-    protected bool flipAfterIdle;
+    private bool flipAfterIdle;
     protected bool isIdleTimeOver;
 
-    protected float idleTime;
+    private float idleTime;
 
-    public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(entity, stateMachine, animBoolName)
+    protected IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
+
 
     public override void Enter()
     {
         base.Enter();
-        core.Movement.SetVelocityX(0);
+        if(Movement)
+            Movement.SetVelocityX(0);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -35,24 +32,22 @@ public class IdleState : State
 
         if(flipAfterIdle)
         {
-            core.Movement.Flip();
+            if(Movement)
+                Movement.Flip();
         }
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        core.Movement.SetVelocityX(0);
+        if (Movement)
+            Movement.SetVelocityX(0);
         if (Time.time>=startTime + idleTime)
         {
             isIdleTimeOver=true;
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
+    
 
     public void SetFlipAfterIdle(bool flip)
     {

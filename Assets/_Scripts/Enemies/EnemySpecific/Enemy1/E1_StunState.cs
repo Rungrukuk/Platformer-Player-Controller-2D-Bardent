@@ -1,57 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-public class E1_StunState : StunState
+﻿namespace _Scripts.Enemies.EnemySpecific.Enemy1
 {
-    private Enemy1 enemy;
-
-    public E1_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData,Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public class E1_StunState : StunState
     {
-        this.enemy = enemy;
-    }
+        private readonly Enemy1 enemy;
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (isStunTimeOver)
+        public E1_StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData,Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
         {
-            if (performCloseRangeAction)
+            this.enemy = enemy;
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (isStunTimeOver)
             {
-                stateMachine.ChangeState(enemy.meleeAttackState);
-            }
-            else if (isPlayerInMinAgroRange)
-            {
-                stateMachine.ChangeState(enemy.chargeState);
-            }
-            else
-            {
-                enemy.lookForPlayerState.SetTurnImmediately(true);
-                stateMachine.ChangeState(enemy.lookForPlayerState);
+                if (performCloseRangeAction)
+                {
+                    stateMachine.ChangeState(enemy.MeleeAttackState);
+                }
+                else if (isPlayerInMinAgroRange)
+                {
+                    stateMachine.ChangeState(enemy.ChargeState);
+                }
+                else
+                {
+                    enemy.LookForPlayerState.SetTurnImmediately(true);
+                    stateMachine.ChangeState(enemy.LookForPlayerState);
+                }
             }
         }
     }
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }
-

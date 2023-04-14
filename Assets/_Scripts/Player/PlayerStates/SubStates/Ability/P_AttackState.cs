@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Player.PlayerStates.SuperStates;
 using UnityEngine;
 
 public class P_AttackState : P_AbilityState
@@ -31,7 +32,8 @@ public class P_AttackState : P_AbilityState
         base.DoChecks();
         if(shouldCheckFlip)
         {
-            core.Movement.CheckIfShouldFlip(xInput);
+            if(Movement)
+            Movement.CheckIfShouldFlip(xInput);
         }
 
     }
@@ -41,7 +43,8 @@ public class P_AttackState : P_AbilityState
         xInput = player.InputHandler.NormalizedInputX;
         if(setVelocity)
         {
-            core.Movement.SetVelocityX(velocityToSet*core.Movement.FacingDirection);
+            if(Movement)
+            Movement.SetVelocityX(velocityToSet*Movement.FacingDirection);
         }
     }
     public void SetWeapon(Weapon weapon)
@@ -52,7 +55,8 @@ public class P_AttackState : P_AbilityState
 
     public void SetPlayerVelocity(float velocity)
     {
-        core.Movement.SetVelocityX(velocity * core.Movement.FacingDirection);
+        if (Movement)
+            Movement.SetVelocityX(velocity * Movement.FacingDirection);
         velocityToSet = velocity;
         setVelocity = true;
     }

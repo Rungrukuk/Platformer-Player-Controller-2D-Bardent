@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using _Scripts.Core;
+using _Scripts.Core.CoreComponents;
+
 using UnityEngine;
 
 public class State
@@ -14,6 +16,12 @@ public class State
     protected bool isPlayerInMaxAgroRange;
     protected bool performCloseRangeAction;
     protected bool isGrounded;
+    protected Movement Movement{get=>movement??core.GetCoreComponent(ref movement);}
+
+    private Movement movement;
+
+    private CollisionSenses collisionSenses;
+    protected CollisionSenses CollisionSenses{ get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
 
     protected string animBoolName;
 
@@ -28,13 +36,13 @@ public class State
     public virtual void Enter()
     {
         startTime = Time.time;
-        entity.anim.SetBool(animBoolName, true);
+        entity.Anim.SetBool(animBoolName, true);
         DoChecks();
     }
 
     public virtual void Exit()
     {
-        entity.anim.SetBool(animBoolName, false);
+        entity.Anim.SetBool(animBoolName, false);
     }
 
     public virtual void LogicUpdate()
@@ -51,6 +59,7 @@ public class State
         isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
         isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
         performCloseRangeAction = entity.CheckPlayerInCloseRangeAction();
-        isGrounded = core.CollisionSenses.Ground;
+        if(CollisionSenses)
+            isGrounded = CollisionSenses.Ground;
     }
 }

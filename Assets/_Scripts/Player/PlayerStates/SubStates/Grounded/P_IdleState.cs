@@ -16,7 +16,8 @@ public class P_IdleState : P_GroundedState
     public override void Enter()
     {
         base.Enter();
-        core.Movement.SetVelocityX(0);
+        if(Movement!=null)
+        Movement.SetVelocityX(0);
     }
 
     public override void Exit()

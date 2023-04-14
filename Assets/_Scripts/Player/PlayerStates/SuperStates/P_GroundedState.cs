@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Core.CoreComponents;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,13 @@ public class P_GroundedState : PlayerState
     protected int yInput;
     private bool jumpInput;
 
+    protected Movement Movement{get=>movement??core.GetCoreComponent(ref movement);}
+
+    private Movement movement;
+
+    private CollisionSenses collisionSenses;
+    private CollisionSenses CollisionSenses{get=>collisionSenses??core.GetCoreComponent(ref collisionSenses);}
+
     private bool grabInput;
 
     private bool isGrounded;
@@ -17,9 +25,12 @@ public class P_GroundedState : PlayerState
 
     private bool isTouchingLedge;
 
-    private bool isTouchingCeiling;
+    protected bool isTouchingCeiling;
 
     private bool dashInput;
+
+
+
     public P_GroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -27,10 +38,13 @@ public class P_GroundedState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
+        if(CollisionSenses != null )
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.WallFront;
+            isTouchingLedge = CollisionSenses.LedgeHorizontal;
+            isTouchingCeiling = CollisionSenses.Ceiling;
+        }
     }
 
     public override void Enter()
@@ -63,7 +77,7 @@ public class P_GroundedState : PlayerState
             stateMachine.ChangeState(player.secondaryAttackState);
         }
 
-        else if (jumpInput && player.JumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling)
         {
             stateMachine.ChangeState(player.JumpState);
         }

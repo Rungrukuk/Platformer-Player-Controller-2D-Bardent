@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Player.PlayerStates.SuperStates;
 using UnityEngine;
 
 public class P_JumpState : P_AbilityState
@@ -14,7 +15,8 @@ public class P_JumpState : P_AbilityState
     {
         base.Enter();
         player.InputHandler.UseJumpInput();
-        core.Movement.SetVelocityY(playerData.jumpVelocity);
+        if (Movement)
+            Movement.SetVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
         amountOfJumpsLeft--;
         player.InAirState.SetIsJumping();

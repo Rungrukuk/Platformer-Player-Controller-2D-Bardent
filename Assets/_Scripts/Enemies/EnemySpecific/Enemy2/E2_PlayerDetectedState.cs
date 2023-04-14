@@ -1,52 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class E2_PlayerDetectedState : PlayerDetectedState
+
+using _Scripts.Enemies.States;
+
+namespace _Scripts.Enemies.EnemySpecific.Enemy2
 {
-    protected Enemy2 enemy;
-
-    public E2_PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_PlayerDetectedState stateData,Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public class E2_PlayerDetectedState : PlayerDetectedState
     {
-        this.enemy = enemy;
-    }
+        private readonly Enemy2 enemy;
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (performCloseRangeAction)
+        public E2_PlayerDetectedState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_PlayerDetectedState stateData,Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
         {
-            stateMachine.ChangeState(enemy.meleeAttackState);
-        }
-        else if (performLongRangeAction)
-        {
-            stateMachine.ChangeState(enemy.rangedAttackState);
-        }
-        else if (!isPlayerInMaxAgroRange)
-        {
-            stateMachine.ChangeState(enemy.lookForPlayerState);
+            this.enemy = enemy;
         }
 
-    }
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (performCloseRangeAction)
+            {
+                stateMachine.ChangeState(enemy.MeleeAttackState);
+            }
+            else if (performLongRangeAction)
+            {
+                stateMachine.ChangeState(enemy.RangedAttackState);
+            }
+            else if (!isPlayerInMaxAgroRange)
+            {
+                stateMachine.ChangeState(enemy.LookForPlayerState);
+            }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+        }
+    
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class P_CrouchMoveState : P_GroundedState
 {
-    private bool isTouchingCeiling;
     public P_CrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -24,11 +23,11 @@ public class P_CrouchMoveState : P_GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
         if (!isExitingState)
         {
-            core.Movement.SetVelocityX(playerData.crouchMovementVelocity * core.Movement.FacingDirection);
-            core.Movement.CheckIfShouldFlip(xInput);
+            Movement.SetVelocityX(playerData.crouchMovementVelocity * Movement.FacingDirection);
+            if (Movement != null)
+                Movement.CheckIfShouldFlip(xInput);
             if (xInput == 0)
             {
                 stateMachine.ChangeState(player.CrouchIdleState);

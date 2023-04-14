@@ -1,53 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using _Scripts.Enemies.States;
 using UnityEngine;
 
-public class E2_MeleeAttackState : MeleeAttackState
+namespace _Scripts.Enemies.EnemySpecific.Enemy2
 {
-    private Enemy2 enemy;
-    public E2_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttackState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
+    public class E2_MeleeAttackState : MeleeAttackState
     {
-        this.enemy = enemy;
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        enemy.dodgeState.canDodge = false;
-    }
-
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (isAnimationFinished)
+        private readonly Enemy2 enemy;
+        public E2_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttackState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
         {
-            stateMachine.ChangeState(enemy.lookForPlayerState);
+            this.enemy = enemy;
         }
+        
 
-    }
+        public override void Exit()
+        {
+            base.Exit();
+            enemy.DodgeState.canDodge = false;
+        }
+        
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (isAnimationFinished)
+            {
+                stateMachine.ChangeState(enemy.LookForPlayerState);
+            }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-    public override void TriggerAttack()
-    {
-        base.TriggerAttack();
+        }
+        
     }
 }

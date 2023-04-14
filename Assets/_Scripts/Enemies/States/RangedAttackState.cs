@@ -1,54 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedAttackState : AttackState
+namespace _Scripts.Enemies.States
 {
-    protected D_RangedAttackState stateData;
-
-    protected GameObject projectile;
-    protected Projectile projectileScript;
-
-    public RangedAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition,D_RangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public class RangedAttackState : AttackState
     {
-        this.stateData = stateData;
-    }
+        private readonly D_RangedAttackState stateData;
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
+        private GameObject projectile;
+        private Projectile projectileScript;
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
+        protected RangedAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition,D_RangedAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+        {
+            this.stateData = stateData;
+        }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
 
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-    public override void TriggerAttack()
-    {
-        base.TriggerAttack();
-        projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
-        projectileScript = projectile.GetComponent<Projectile>();
-        projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
+        public override void TriggerAttack()
+        {
+            base.TriggerAttack();
+            projectile = Object.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
+            projectileScript = projectile.GetComponent<Projectile>();
+            projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
+        }
     }
 }

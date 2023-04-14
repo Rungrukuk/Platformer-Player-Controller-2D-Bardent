@@ -1,31 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.TextCore;
+
 
 public class StunState : State
 {
-    protected D_StunState stateData;
+    private readonly D_StunState stateData;
 
     protected bool isStunTimeOver;
-    protected bool isMovementStopped;
+    private bool isMovementStopped;
 
-    public StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)
+    protected StunState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_StunState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
+    
 
     public override void Enter()
     {
         base.Enter();
         isStunTimeOver = false;
         isMovementStopped = false;
-        core.Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.lastDamageDirection);
+        Movement.SetVelocity(stateData.stunKnockbackSpeed, stateData.stunKnockbackAngle, entity.LastDamageDirection);
     }
 
     public override void Exit()
@@ -44,12 +39,8 @@ public class StunState : State
         if(isGrounded&&Time.time>=startTime+stateData.stunKnockbackTime && !isMovementStopped)
         {
             isMovementStopped = true;
-            core.Movement.SetVelocityX(0);
+            Movement.SetVelocityX(0);
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
+    
 }

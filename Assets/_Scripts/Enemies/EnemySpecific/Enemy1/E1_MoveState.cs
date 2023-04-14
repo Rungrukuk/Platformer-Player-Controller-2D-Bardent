@@ -1,42 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using _Scripts.Enemies.States;
 
-public class E1_MoveState : MoveState
+namespace _Scripts.Enemies.EnemySpecific.Enemy1
 {
-    private Enemy1 enemy;
-
-    public E1_MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public class E1_MoveState : MoveState
     {
-        this.enemy = enemy;
-    }
+        private readonly Enemy1 enemy;
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (isPlayerInMinAgroRange)
+        public E1_MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData,
+            Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
+            this.enemy = enemy;
         }
-        else if (isDetectingWall || !isDetectingLedge)
-        {
-            enemy.idleState.SetFlipAfterIdle(true);
-            stateMachine.ChangeState(enemy.idleState);
-        }
-    }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+            if (isPlayerInMinAgroRange)
+            {
+                stateMachine.ChangeState(enemy.PlayerDetectedState);
+            }
+            else if (isDetectingWall || !isDetectingLedge)
+            {
+                enemy.IdleState.SetFlipAfterIdle(true);
+                stateMachine.ChangeState(enemy.IdleState);
+            }
+        }
     }
 }
+

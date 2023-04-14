@@ -1,19 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoreComponent : MonoBehaviour,ILogicUpdate
+namespace _Scripts.Core.CoreComponents
 {
-    protected Core core;
+    public class CoreComponent : MonoBehaviour, ILogicUpdate
+    {
+        protected Core core;
+        protected Movement Movement => movement ? movement : core.GetCoreComponent(ref movement);
 
-    protected virtual void Awake()
-    {
-        if (!transform.parent.TryGetComponent<Core>(out core))
-            Debug.LogError("There is no core on the parent");
-        core.AddComponent(this);
-    }
-    public virtual void LogicUpdate()
-    {
-        
+        private Movement movement;
+
+        private CollisionSenses collisionSenses;
+        protected CollisionSenses CollisionSenses => collisionSenses ? collisionSenses : core.GetCoreComponent(ref collisionSenses);
+        private Stats stats;
+        protected Stats Stats => stats ? stats : core.GetCoreComponent(ref stats);
+
+        protected virtual void Awake()
+        {
+            if (!transform.parent.TryGetComponent(out core))
+                Debug.LogError("There is no core on the parent");
+            core.AddComponent(this);
+        }
+        public virtual void LogicUpdate()
+        {
+
+        }
     }
 }

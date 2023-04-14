@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Player.PlayerStates.SuperStates;
 using UnityEngine;
 
 public class P_DashState : P_AbilityState
@@ -25,7 +26,8 @@ public class P_DashState : P_AbilityState
         player.InputHandler.UseDashInput();
 
         isHolding = true;
-        dashDirection = Vector2.right * core.Movement.FacingDirection;
+        if(Movement)
+        dashDirection = Vector2.right * Movement.FacingDirection;
 
         Time.timeScale = playerData.holdTimeScale;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
@@ -39,11 +41,15 @@ public class P_DashState : P_AbilityState
     public override void Exit()
     {
         base.Exit();
-        
-        if (core.Movement.CurrentVelocity.y > 0)
+
+        if (Movement)
         {
-            core.Movement.SetVelocityY(core.Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
+            if (Movement.CurrentVelocity.y > 0)
+            {
+                Movement.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
+            }
         }
+
     }
 
     public override void LogicUpdate()
@@ -51,8 +57,12 @@ public class P_DashState : P_AbilityState
         base.LogicUpdate();
         if (!isExitingState)
         {
-            player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
-            player.Anim.SetFloat("xVelocity", core.Movement.CurrentVelocity.x);
+            if (Movement)
+            {
+                player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
+                player.Anim.SetFloat("xVelocity", Movement.CurrentVelocity.x);
+            }
+
             if (isHolding)
             {
                 dashInputStopped = player.InputHandler.DashInputStopped;
@@ -72,16 +82,21 @@ public class P_DashState : P_AbilityState
                     Time.fixedDeltaTime = 0.02f;
                     Time.timeScale = 1f;
                     startTime = Time.time;
-                    core.Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
+                    if (Movement)
+                    {
+                        Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
+                        Movement.SetVelocity(playerData.dashVelocity, dashDirection);
+                    }
+
                     player.RB.drag = playerData.drag;
-                    core.Movement.SetVelocity(playerData.dashVelocity, dashDirection);
                     player.DashDirectionIndicator.gameObject.SetActive(false);
                     PlaceAfterImage();
                 }
             }
             else
             {
-                core.Movement.SetVelocity(playerData.dashVelocity,dashDirection);
+                if(Movement)
+                Movement.SetVelocity(playerData.dashVelocity,dashDirection);
                 CheckIfShouldPlaceAfterImage();
                 if(Time.time>=startTime + playerData.dashTime)
                 {
