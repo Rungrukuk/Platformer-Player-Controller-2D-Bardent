@@ -24,12 +24,16 @@ namespace _Scripts.Core
             }
         }
 
-        public T GetCoreComponent<T>() where T : CoreComponent
+        private T GetCoreComponent<T>() where T : CoreComponent
         {
             var comp =  coreComponents.OfType<T>().FirstOrDefault();
-            if (comp == null)
-                Debug.LogWarning($"{typeof(T)} Not Found On {transform.parent.name}");
-            return comp;
+            if (comp)
+                return comp;
+            comp = GetComponentInChildren<T>();
+            if (comp)
+                return comp;
+            Debug.LogWarning($"{typeof(T)} Not Found On {transform.parent.name}");
+            return null;
         }
 
         public T GetCoreComponent<T>(ref T value) where T : CoreComponent
