@@ -4,10 +4,15 @@ namespace _Scripts.Core.CoreComponents
 {
     public class Combat : CoreComponent,IDamageable,IKnockbackable
     {
+        [SerializeField] private GameObject damageParticles;
+        
         [SerializeField]
         private bool isKnockbackActive;
 
+        private ParticleManager particleManager;
 
+        private ParticleManager ParticleManager =>
+            particleManager ? particleManager : core.GetCoreComponent(ref particleManager);
         public override void LogicUpdate()
         {
             CheckKnockback();
@@ -15,6 +20,8 @@ namespace _Scripts.Core.CoreComponents
         public void Damage(float amount)
         {
             Stats.DecreaseHealth(amount);
+            if(ParticleManager)
+                ParticleManager.StartParticlesWithRandomRotation(damageParticles);
         }
 
         public void Knockback(Vector2 angle, float strength, int direction)

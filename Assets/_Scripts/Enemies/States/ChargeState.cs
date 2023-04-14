@@ -4,12 +4,12 @@ namespace _Scripts.Enemies.States
 {
     public class ChargeState : State
     {
-        protected D_ChargeState stateData;
+        private readonly D_ChargeState stateData;
 
         protected bool isDetectingLedge;
         protected bool isDetectingWall;
 
-        public ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(entity, stateMachine, animBoolName)
+        protected ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(entity, stateMachine, animBoolName)
         {
             this.stateData = stateData;
         }
