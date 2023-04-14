@@ -10,8 +10,8 @@ namespace _Scripts.Core.CoreComponents
         private ParticleManager ParticleManager =>
             particleManager ? particleManager : core.GetCoreComponent(ref particleManager);
 
-        private Stats stats;
-        private new Stats Stats => stats ? stats : core.GetCoreComponent(ref stats);
+        private Stats entityStats;
+        private Stats EntityStats => entityStats ? entityStats : core.GetCoreComponent(ref entityStats);
 
         private void Die()
         {
@@ -24,12 +24,12 @@ namespace _Scripts.Core.CoreComponents
 
         private void OnEnable()
         {
-            Stats.OnHealthZero += Die;
+            EntityStats.OnHealthZero += Die;
         }
 
         private void OnDisable()
         {
-            Stats.OnHealthZero -= Die;
+            EntityStats.OnHealthZero -= Die;
         }
     }
 }
