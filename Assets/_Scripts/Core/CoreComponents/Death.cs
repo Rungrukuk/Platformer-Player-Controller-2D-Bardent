@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _Scripts.Core.CoreComponents
@@ -13,8 +12,8 @@ namespace _Scripts.Core.CoreComponents
 
         private Stats stats;
         private new Stats Stats => stats ? stats : core.GetCoreComponent(ref stats);
-        
-        public void Die()
+
+        private void Die()
         {
             foreach (var particle in deathParticles)
             {
